@@ -31,6 +31,10 @@ import android.widget.TextView;
 import android.content.ClipboardManager;
 import android.widget.Toast;
 
+import com.microsoft.appcenter.AppCenter;
+import com.microsoft.appcenter.analytics.Analytics;
+import com.microsoft.appcenter.crashes.Crashes;
+
 import com.example.avjindersinghsekhon.minimaltodo.Analytics.AnalyticsApplication;
 import com.example.avjindersinghsekhon.minimaltodo.AppDefault.AppDefaultFragment;
 import com.example.avjindersinghsekhon.minimaltodo.Main.MainActivity;
@@ -100,7 +104,7 @@ public class AddToDoFragment extends AppDefaultFragment implements DatePickerDia
         ImageButton reminderIconImageButton;
         TextView reminderRemindMeTextView;
 
-
+        Analytics.trackEvent("Creating To Do item");
         theme = getActivity().getSharedPreferences(MainFragment.THEME_PREFERENCES, MODE_PRIVATE).getString(MainFragment.THEME_SAVED, MainFragment.LIGHTTHEME);
         if (theme.equals(MainFragment.LIGHTTHEME)) {
             getActivity().setTheme(R.style.CustomStyle_LightTheme);
@@ -287,6 +291,7 @@ public class AddToDoFragment extends AppDefaultFragment implements DatePickerDia
                     makeResult(RESULT_CANCELED);
                 } else {
                     app.send(this, "Action", "Make Todo");
+                    Analytics.trackEvent("To Do created");
                     makeResult(RESULT_OK);
                     getActivity().finish();
                 }
